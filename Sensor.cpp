@@ -29,21 +29,19 @@ int Sensor::convertToRH(int h){
 
 void Sensor::displayData() {
     int x = this->write(0x27);
-    unsigned char *y = this->readDevice(5);
-    bitset <8> t = 0;
-    bitset <8> h = 0;
+    unsigned char *y = this->readDevice(4);
     int humidity = 0;
     int temperature = 0;
 
-    bitset <4> a(string(1,y[0]));
-    bitset <4> b(string(1,y[1]));
-    h = concat(a, b);
-    humidity = (int)(h.to_ulong());
+    bitset <4> h1(y[0]);
+    bitset <4> h2(y[1]);
+    bitset <8> h3 = concat(h1, h2);
+    humidity = (int)(h3.to_ulong());
 
-    bitset <4> c(string(1,y[2]));
-    bitset <4> d(string(1,y[3]));
-    t = concat(c, d);
-    temperature = (int)(t.to_ulong());
+    bitset <4> t1(y[2]);
+    bitset <4> t2(y[3]);
+    bitset <8> t3 = concat(t1, t2);
+    temperature = (int)(t3.to_ulong());
     
     humidity = convertToRH(humidity);
     temperature = convertToCelcius(temperature);
