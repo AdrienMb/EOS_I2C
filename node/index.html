@@ -12,9 +12,9 @@
 		socket.on('sensorData', function(data) {
 			var myData = JSON.parse(data);
             document.getElementById("outputTemperature").innerHTML = 
-				"Temperature: " + myData.temperature;
+				"Temperature: " + myData.temperature + " &#8451;";
             document.getElementById("outputHumidity").innerHTML =
-				"Humidity: " + myData.humidity;
+				"Humidity: " + myData.humidity + "%";
 		});	
 
 		// Set update interval

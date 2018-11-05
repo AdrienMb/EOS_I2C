@@ -40,7 +40,7 @@ var io = require('socket.io').listen(server);
 // When communication is established
 io.on('connection', function (socket) {
     socket.on('readSensor', function handleSensor() {
-		const child = execFile('Humidity18', (error, stdout, stderr) => {
+		const child = execFile('./greenhouse', (error, stdout, stderr) => {
 		if(error) {
 			console.error('stderr', stderr);
 			throw error;

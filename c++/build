@@ -1,0 +1,1 @@
+g++ I2CDevice.cpp Sensor.cpp app.cpp -o greenhouse
