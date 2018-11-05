@@ -29,19 +29,38 @@ int Sensor::convertToRH(int h){
 
 void Sensor::displayData() {
     int x = this->write(0x27);
-    unsigned char *y = this->readDevice(4);
+    unsigned char *y = this->readDevice(5);
     int humidity = 0;
     int temperature = 0;
 
-    bitset <4> h1(y[0]);
-    bitset <4> h2(y[1]);
-    bitset <8> h3 = concat(h1, h2);
+    printf("base10\n");
+    printf("%d\n", y[0]);
+    printf("%d\n", y[1]);
+    printf("%d\n", y[2]);
+    printf("%d\n\n", y[3]);
+    
+
+    bitset <8> h1(y[1]);
+    bitset <8> h2(y[2]);
+    bitset <16> h3 = concat(h1, h2);
     humidity = (int)(h3.to_ulong());
 
-    bitset <4> t1(y[2]);
-    bitset <4> t2(y[3]);
-    bitset <8> t3 = concat(t1, t2);
+    bitset <8> t1(y[3]);
+    bitset <8> t2(y[4]);
+    bitset <16> t3 = concat(t1, t2);
     temperature = (int)(t3.to_ulong());
+
+
+    // printf("bitsets\n");
+    // printf("%s\n", h1.to_string());
+    // printf("%s\n", h2.to_string());
+    // printf("%s\n", t1.to_string());
+    // printf("%s\n", t2.to_string());
+
+    printf("before conversion\n");
+    printf("H: %d\n", humidity);
+    printf("T: %d\n", temperature);
+    
     
     humidity = convertToRH(humidity);
     temperature = convertToCelcius(temperature);
