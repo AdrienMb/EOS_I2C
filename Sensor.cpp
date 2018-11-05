@@ -33,40 +33,23 @@ void Sensor::displayData() {
     int humidity = 0;
     int temperature = 0;
 
-    printf("base10\n");
-    printf("%d\n", y[0]);
-    printf("%d\n", y[1]);
-    printf("%d\n", y[2]);
-    printf("%d\n\n", y[3]);
-    
-
-    bitset <8> h1(y[1]);
-    bitset <8> h2(y[2]);
-    bitset <16> h3 = concat(h1, h2);
+    bitset <6> h1(y[0]);
+    bitset <8> h2(y[1]);
+    bitset <14> h3 = concat(h1, h2);
     humidity = (int)(h3.to_ulong());
 
-    bitset <8> t1(y[3]);
-    bitset <8> t2(y[4]);
-    bitset <16> t3 = concat(t1, t2);
-    temperature = (int)(t3.to_ulong());
-
-
-    // printf("bitsets\n");
-    // printf("%s\n", h1.to_string());
-    // printf("%s\n", h2.to_string());
-    // printf("%s\n", t1.to_string());
-    // printf("%s\n", t2.to_string());
-
-    printf("before conversion\n");
-    printf("H: %d\n", humidity);
-    printf("T: %d\n", temperature);
-    
+    bitset <8> t1(y[2]);
+    bitset <8> t2(y[3]);
+    t2 = t2 >> 2;
+    bitset <6> t3(t2.to_ulong());
+    bitset <14> t4 = concat(t1, t3);
+    temperature = (int)(t4.to_ulong());
     
     humidity = convertToRH(humidity);
     temperature = convertToCelcius(temperature);
 
-    printf("H: %d", humidity);
-    printf("T: %d", temperature);
+    printf("H: %d\n", humidity);
+    printf("T: %d\n", temperature);
 }
 
 Sensor::Sensor(unsigned int I2CBus, unsigned int I2CAddress):
