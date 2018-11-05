@@ -10,6 +10,8 @@ public:
 	Sensor(unsigned int I2CBus, unsigned int I2CAddress=0x53);
 	virtual ~Sensor();
     void displayData();
+    int convertToCelcius(int temp);
+    int convertToRH(int humidity);
 
 };
 
