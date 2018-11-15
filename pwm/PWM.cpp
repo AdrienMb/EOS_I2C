@@ -30,7 +30,7 @@ namespace exploringBB {
 
 PWM::PWM(string pinName) {
 	this->name = pinName;
-	this->path = PWM_PATH + this->name + "/";
+	this->path = PWM_PATH;
 	this->analogFrequency = 100000;
 	this->analogMax = 3.3;
 }

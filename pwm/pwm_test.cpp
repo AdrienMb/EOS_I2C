@@ -27,14 +27,18 @@
 #include <stdio.h>
 #include <string.h>
 #include <dirent.h>
+#include <unistd.h>
 
 using namespace exploringBB;
 using namespace std;
 
 
 void checkFile() {
+    /*
+    printf("Test1");
     char cmd[] = "config-pin -a P9_21 pwm";
     system(cmd);
+    printf("/sys/class/pwm/pwmchip1/pwm-1\\:1");
     DIR *dir = opendir("/sys/class/pwm/pwmchip1/pwm-1\\:1");
 
     if(dir){
@@ -44,20 +48,45 @@ void checkFile() {
         char ptr = '1';
         char path[] = "/sys/class/pwm/pwmchip1/export";
         FILE *fp;
-        fp = fopen(path, "w");
+        fp = fopen("/sys/class/pwm/pwmchip1/export", "wb");
+        printf("Test3");
         fwrite(&ptr, 1, 1, fp);
         fclose(fp);
         closedir(dir);
         printf("Set export to 1 \n");
     }
-    
+    */
 }
 
 int main( int argc, const char* argv[] ) {
+    char ptr = '1';
+    FILE *fp;
+    fp = fopen("/sys/class/pwm/pwmchip1/export", "wb");
+    fwrite(&ptr, 1, 1, fp);
+    fclose(fp);
 
-    // checkFile();
+    usleep(5000000);
 
-    int intensity;
+    FILE *fp2;
+    printf("/sys/class/pwm/pwmchip1/pwm-1\\:1/period");
+
+    fp2 = fopen("/sys/class/pwm/pwmchip1/pwm-1\\:1/period", "wb");
+    char period[] = "20000000";
+    fwrite(period, 1,  sizeof(period), fp2);
+    fclose(fp2);
+/*
+    fp = fopen("/sys/class/pwm/pwmchip1/duty_cycle", "w");
+    char duty[] = "2000000";
+    fwrite(duty, 1, sizeof(duty), fp);
+    fclose(fp);
+
+    fp = fopen("/sys/class/pwm/pwmchip1/enable", "w");
+    fwrite(&ptr, 1, 1, fp);
+    fclose(fp);
+
+    */
+    //checkFile();
+    /*int intensity;
 
     for(int i = 1; i < argc; i++) {
         intensity = atoi(argv[i]);
@@ -67,13 +96,14 @@ int main( int argc, const char* argv[] ) {
         }
     }
 
-    int period = intensity * 10000;
-
-    // PWM pwm("pwm_test_P9_22.15");  // example alternative pin
-    PWM pwm("pwm_test_P9_21.12");  // P9_42 MUST be loaded as a slot before use
+    int period = intensity * 10000;*/
+    
+    
+    /*// PWM pwm("pwm_test_P9_22.15");  // example alternative pin
+    PWM pwm("pwm_test_P9_22.12");  // P9_42 MUST be loaded as a slot before use
     pwm.setPeriod(period);         // Set the period in ns
     pwm.setDutyCycle(50.0f);       // Set the duty cycle as a percentage
     pwm.setPolarity(PWM::ACTIVE_HIGH);  // using active low PWM
-    pwm.run();                     // start the PWM output
+    pwm.run();                     // start the PWM output*/
 
 }
