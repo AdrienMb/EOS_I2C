@@ -38,7 +38,7 @@ void checkFile()
     FILE *fp;
     char ptr = '1';
 
-    char cmd[] = "config-pin -a P9_21 pwm";
+    char cmd[] = "config-pin -a P9_22 pwm";
     system(cmd);
     DIR *dir = opendir("/sys/class/pwm/pwmchip1/pwm-1:1");
 
