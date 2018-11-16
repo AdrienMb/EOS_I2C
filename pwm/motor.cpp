@@ -38,7 +38,7 @@ void checkFile()
     FILE *fp;
     char ptr = '1';
 
-    char cmd[] = "config-pin -a P9_21 pwm";
+    char cmd[] = "config-pin -a P9_22 pwm";
     system(cmd);
     DIR *dir = opendir("/sys/class/pwm/pwmchip1/pwm-1:1");
 
@@ -67,38 +67,28 @@ int main(int argc, const char *argv[])
 
     usleep(500000);
 
-    int intensity;
-    int dutyInt;
+    int angle;
+    int periodInt;
     for(int i = 1; i < argc; i++) {
-        intensity = atoi(argv[i]);
+        angle = atoi(argv[i]);
         if(argc > 2) {
             printf("Too many arguments provided.\n");
             exit(99);
         }
     }
     
-    if(intensity<=100 && intensity>=0){
-        dutyInt = intensity * 30000;
+    if(angle<=180 && angle>=0){
+        periodInt = angle * 10000 +570000;
     }
     else {
-        dutyInt = 0;
-        printf("Please write intensity between 0 to 100\n");        
+        periodInt = 0;
+        printf("Please write angle between 0 to 180\n");        
     }
 
-    
+    printf("%d",sizeof(periodS));
 
-    char period[] = "20000000";
-    fp = fopen("/sys/class/pwm/pwmchip1/pwm-1:1/period", "w");
-    fwrite(period, 1, sizeof(period), fp);
-    fclose(fp);
-
-    std::string dutyS = std::to_string(dutyInt);
-    char const *duty = dutyS.c_str(); 
-
-    printf("%d",sizeof(dutyS));
-
-    fp = fopen("/sys/class/pwm/pwmchip1/pwm-1:1/duty_cycle", "w");
-    fwrite(duty, 1, sizeof(dutyS), fp);
+    fp = fopen("/sys/class/pwm/pwmchip1/pwm-1:1/period_cycle", "w");
+    fwrite(period, 1, sizeof(periodS), fp);
     fclose(fp);
 
     fp = fopen("/sys/class/pwm/pwmchip1/pwm-1:1/enable", "w");
