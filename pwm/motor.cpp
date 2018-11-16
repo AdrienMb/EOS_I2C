@@ -68,7 +68,7 @@ int main(int argc, const char *argv[])
     usleep(500000);
 
     int angle;
-    int periodInt;
+    int dutyInt;
     for(int i = 1; i < argc; i++) {
         angle = atoi(argv[i]);
         if(argc > 2) {
