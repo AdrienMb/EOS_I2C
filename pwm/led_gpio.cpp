@@ -6,26 +6,20 @@
 
 using namespace std;
 
-int main(int argc, const char *argv[])
+int main(int argc, char *argv[])
 {
     FILE *fp;
 
-
-    char* value;
-    for(int i = 1; i < argc; i++) {
+    char *value;
+    for (int i = 1; i < argc; i++)
+    {
         value = argv[i];
-        if(argc > 2) {
+        if (argc > 2)
+        {
             printf("Too many arguments provided.\n");
             exit(99);
         }
     }
-    
-    if(value!='1' && value!='0'){
-        value = '0';
-        printf("Please write 0 or 1\n");   
-    }
-
-    
 
     char out[] = "out";
     fp = fopen("/sys/class/gpio/gpio49/direction", "w");
@@ -35,6 +29,4 @@ int main(int argc, const char *argv[])
     fp = fopen("/sys/class/gpio/gpio49/value", "w");
     fwrite(value, 1, sizeof(value), fp);
     fclose(fp);
-
-    
 }
