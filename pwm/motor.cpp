@@ -88,7 +88,7 @@ int main(int argc, const char *argv[])
     std::string periodS = std::to_string(periodInt);
     char const *period = periodS.c_str(); 
 
-    fp = fopen("/sys/class/pwm/pwmchip1/pwm-1:1/period_cycle", "w");
+    fp = fopen("/sys/class/pwm/pwmchip1/pwm-1:1/period", "w");
     fwrite(period, 1, sizeof(periodS), fp);
     fclose(fp);
 
