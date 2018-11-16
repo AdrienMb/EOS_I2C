@@ -99,6 +99,12 @@ int main(int argc, const char *argv[])
 
     fp = fopen("/sys/class/pwm/pwmchip1/pwm-1:1/enable", "w");
     fwrite(&ptr, 1, 1, fp);
+
+    usleep(300000);
+
+    char ptrr = '0';
+    fp = fopen("/sys/class/pwm/pwmchip1/pwm-1:1/enable", "w");
+    fwrite(&ptrr, 1, 1, fp);
     fclose(fp);
 
     
