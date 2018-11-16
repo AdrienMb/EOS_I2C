@@ -85,6 +85,11 @@ int main(int argc, const char *argv[])
         printf("Please write angle between 0 to 180\n");        
     }
 
+    char ptrr = '0';
+    fp = fopen("/sys/class/pwm/pwmchip1/pwm-1:1/polarity", "w");
+    fwrite(&ptrr, 1, 1, fp);
+    fclose(fp);
+
     std::string periodS = std::to_string(periodInt);
     char const *period = periodS.c_str(); 
 
@@ -97,12 +102,12 @@ int main(int argc, const char *argv[])
     fwrite(duty, 1, sizeof(duty), fp);
     fclose(fp);
 
+
     fp = fopen("/sys/class/pwm/pwmchip1/pwm-1:1/enable", "w");
     fwrite(&ptr, 1, 1, fp);
 
     usleep(300000);
 
-    char ptrr = '0';
     fp = fopen("/sys/class/pwm/pwmchip1/pwm-1:1/enable", "w");
     fwrite(&ptrr, 1, 1, fp);
     fclose(fp);
