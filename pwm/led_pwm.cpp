@@ -10,11 +10,11 @@ void checkFile()
 {
 
     FILE *fp;
-    char ptr = '1';
+    char ptr = '0';
 
-    char cmd[] = "config-pin -a P9_21 pwm";
+    char cmd[] = "config-pin -a P9_22 pwm";
     system(cmd);
-    DIR *dir = opendir("/sys/class/pwm/pwmchip1/pwm-1:1");
+    DIR *dir = opendir("/sys/class/pwm/pwmchip1/pwm-1:0");
 
     if (dir)
     {
@@ -62,7 +62,7 @@ int main(int argc, const char *argv[])
     
 
     char period[] = "20000000";
-    fp = fopen("/sys/class/pwm/pwmchip1/pwm-1:1/period", "w");
+    fp = fopen("/sys/class/pwm/pwmchip1/pwm-1:0/period", "w");
     fwrite(period, 1, sizeof(period), fp);
     fclose(fp);
 
@@ -71,11 +71,11 @@ int main(int argc, const char *argv[])
 
     printf("%d",sizeof(dutyS));
 
-    fp = fopen("/sys/class/pwm/pwmchip1/pwm-1:1/duty_cycle", "w");
+    fp = fopen("/sys/class/pwm/pwmchip1/pwm-1:0/duty_cycle", "w");
     fwrite(duty, 1, sizeof(dutyS), fp);
     fclose(fp);
 
-    fp = fopen("/sys/class/pwm/pwmchip1/pwm-1:1/enable", "w");
+    fp = fopen("/sys/class/pwm/pwmchip1/pwm-1:0/enable", "w");
     fwrite(&ptr, 1, 1, fp);
     fclose(fp);
 
