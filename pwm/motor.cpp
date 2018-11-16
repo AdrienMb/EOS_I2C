@@ -85,7 +85,8 @@ int main(int argc, const char *argv[])
         printf("Please write angle between 0 to 180\n");        
     }
 
-    printf("%d",sizeof(periodS));
+    std::string periodS = std::to_string(periodInt);
+    char const *period = periodS.c_str(); 
 
     fp = fopen("/sys/class/pwm/pwmchip1/pwm-1:1/period_cycle", "w");
     fwrite(period, 1, sizeof(periodS), fp);
