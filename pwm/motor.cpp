@@ -92,6 +92,11 @@ int main(int argc, const char *argv[])
     fwrite(period, 1, sizeof(periodS), fp);
     fclose(fp);
 
+    char duty[] = "1460000";
+    fp = fopen("/sys/class/pwm/pwmchip1/pwm-1:1/duty_cycle", "w");
+    fwrite(duty, 1, sizeof(duty), fp);
+    fclose(fp);
+
     fp = fopen("/sys/class/pwm/pwmchip1/pwm-1:1/enable", "w");
     fwrite(&ptr, 1, 1, fp);
     fclose(fp);
