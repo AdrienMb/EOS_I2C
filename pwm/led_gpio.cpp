@@ -11,7 +11,7 @@ int main(int argc, const char *argv[])
     FILE *fp;
 
 
-    char value;
+    char* value;
     for(int i = 1; i < argc; i++) {
         value = argv[i];
         if(argc > 2) {
@@ -33,7 +33,7 @@ int main(int argc, const char *argv[])
     fclose(fp);
 
     fp = fopen("/sys/class/gpio/gpio49/value", "w");
-    fwrite(&value, 1, sizeof(value), fp);
+    fwrite(value, 1, sizeof(value), fp);
     fclose(fp);
 
     
