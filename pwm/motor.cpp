@@ -77,34 +77,35 @@ int main(int argc, const char *argv[])
         }
     }
     
-    if(angle<=180 && angle>=0){
-        periodInt = angle * 10000 +570000;
+    if(angle<=90 && angle>=0){
+        dutyInt = angle * 11111 +1000000;
     }
     else {
-        periodInt = 0;
+        dutyInt = 0;
         printf("Please write angle between 0 to 180\n");        
     }
 
-    char ptrr = '0';
-    fp = fopen("/sys/class/pwm/pwmchip1/pwm-1:1/polarity", "w");
-    fwrite(&ptrr, 1, 1, fp);
-    fclose(fp);
 
-    std::string periodS = std::to_string(periodInt);
-    char const *period = periodS.c_str(); 
+
+
+    char period[] = "20000000";
 
     fp = fopen("/sys/class/pwm/pwmchip1/pwm-1:1/period", "w");
-    fwrite(period, 1, sizeof(periodS), fp);
+    fwrite(period, 1, sizeof(period), fp);
     fclose(fp);
 
-    char duty[] = "146000";
-    fp = fopen("/sys/class/pwm/pwmchip1/pwm-1:1/duty_cycle", "w");
-    fwrite(duty, 1, sizeof(duty), fp);
-    fclose(fp);
-
-
+    
     fp = fopen("/sys/class/pwm/pwmchip1/pwm-1:1/enable", "w");
     fwrite(&ptr, 1, 1, fp);
+
+    std::string dutyS = std::to_string(dutyInt);
+    char const *duty = dutyS.c_str(); 
+
+    fp = fopen("/sys/class/pwm/pwmchip1/pwm-1:1/duty_cycle", "w");
+    fwrite(duty, 1, sizeof(dutyS), fp);
+    fclose(fp);
+
+
 
     
 }
