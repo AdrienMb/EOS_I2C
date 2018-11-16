@@ -85,8 +85,7 @@ int main(int argc, const char *argv[])
         printf("Please write angle between 0 to 180\n");        
     }
 
-
-
+    usleep(500000);
 
     char period[] = "20000000";
 
@@ -94,17 +93,19 @@ int main(int argc, const char *argv[])
     fwrite(period, 1, sizeof(period), fp);
     fclose(fp);
 
-    
+    usleep(500000);
+
     fp = fopen("/sys/class/pwm/pwmchip1/pwm-1:1/enable", "w");
     fwrite(&ptr, 1, 1, fp);
 
     std::string dutyS = std::to_string(dutyInt);
     char const *duty = dutyS.c_str(); 
 
+    usleep(500000);    
+
     fp = fopen("/sys/class/pwm/pwmchip1/pwm-1:1/duty_cycle", "w");
     fwrite(duty, 1, sizeof(dutyS), fp);
     fclose(fp);
-
 
 
     
