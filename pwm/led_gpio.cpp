@@ -19,13 +19,6 @@ int main(int argc, const char *argv[])
             exit(99);
         }
     }
-    
-    if(value!='1' && value!='0'){
-        value = '0';
-        printf("Please write 0 or 1\n");   
-    }
-
-    
 
     char out[] = "out";
     fp = fopen("/sys/class/gpio/gpio49/direction", "w");
