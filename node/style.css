@@ -1,0 +1,31 @@
+.measure {
+    height: 200px;
+    padding-top:75px;
+    font-size: 28px;
+    background-color: white;
+    margin-bottom: 30px;
+}
+.slidecontainer {
+    height: 200px;
+    padding-top:60px;
+    text-align: center;
+    background-color: white;
+}
+.slidecontainer input{
+    width: 90%;
+}
+.buttonscontainer {
+    height: 100px;
+    padding-top:30px;
+    text-align: center;
+}
+.buttonscontainer button{
+    width: 230px;
+}
+body {
+    background-color: #F2F2F2;
+}
+#homeTitle {
+    text-align: center;
+    margin-top: 20px;
+}

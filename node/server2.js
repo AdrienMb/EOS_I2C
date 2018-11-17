@@ -11,10 +11,10 @@ var server = http.createServer(function (req, res) {
     var fileExtension = path.extname(file);
     var contentType = 'text/html';
     // Uncoment if you want to add css to your web page
-    /*
+    
     if(fileExtension == '.css'){
         contentType = 'text/css';
-    }*/
+    }
     fs.exists(file, function (exists) {
         if (exists) {
             fs.readFile(file, function (error, content) {
