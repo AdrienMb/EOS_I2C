@@ -1,39 +1,82 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>IoT sensor with BeagleBone</title>
-    <script src = "/socket.io/socket.io.js" ></script>
-    <script>
-        // Establishing connection with server
-        var socket = io.connect(); /* global io */
-		var updateInterval;
+  <title>IoT sensor with BeagleBone</title>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    // Establishing connection with server
+    var socket = io.connect(); /* global io */
+    var updateInterval;
 
-		// Update when data received on socket
-		socket.on('sensorData', function(data) {
-			var myData = JSON.parse(data);
-            document.getElementById("outputTemperature").innerHTML = 
-				"Temperature: " + myData.temperature + " &#8451;";
-            document.getElementById("outputHumidity").innerHTML =
-				"Humidity: " + myData.humidity + "%";
-		});	
+    // Update when data received on socket
+    socket.on('sensorData', function (data) {
+      var myData = JSON.parse(data);
+      document.getElementById("outputTemperature").innerHTML =
+        "Temperature: " + myData.temperature + " &#8451;";
+      document.getElementById("outputHumidity").innerHTML =
+        "Humidity: " + myData.humidity + "%";
+    });
 
-		// Set update interval
-	   function update() {
-			updateInterval = setInterval(getValues, 1000);
-		}
+    socket.on('brightnessSensor', function (data) {
+      var myData = JSON.parse(data);
+      document.getElementById("outputBrightness").innerHTML =
+        "Brightness: " + myData.brightness + " %";
+    });
 
-        // Request sensor data
-        function getValues(){
-			// Emit message to get data
-			socket.emit('readSensor');
-       }
+    // Set update interval
+    function update() {
+      updateInterval = setInterval(getValues, 1000);
+    }
 
-    </script>
+    // Request sensor data
+    function getValues() {
+      // Emit message to get data
+      socket.emit('readSensor');
+      socket.emit('readBrightness');
+    }
+
+    function moveMotor(value) {
+      socket.emit('moveMotor', { value: value });
+    }
+
+    function adjustBrightness(value) {
+      socket.emit('adjustBrightness', { value: value });
+    }
+
+    var heating = false;
+    function toggleHeating(value) {
+      heating = !heating;
+      socket.emit('toggleHeating', { value: value });
+    }
+
+    function autoBrightness() {
+      socket.emit('autoBrightness');
+    }
+
+  </script>
 </head>
+
 <body onload="update()">
-	<h2>Temperature and Humidity</h2>
-	<p id="outputTemperature">----</p>
-    <p id="outputHumidity">----</p>
-</div>
+  <h2>Temperature and Humidity</h2>
+  <p id="outputTemperature">----</p>
+  <p id="outputHumidity">----</p>
+  <p id="outputBrightness">----</p>
+  <div class="slidecontainer">
+    <label for="motorSlider">Motor</label>
+    <input type="range" min="0" max="90" value="45" class="slider" id="motorSlider" onchange="moveMotor(value)">
+  </div>
+  <div class="slidecontainer">
+    <label for="ledSlider">Brightness</label>
+    <input type="range" min="0" max="100" value="45" class="slider" id="ledSlider" onchange="adjustBrightness(value)">
+  </div>
+  <div>
+    <button id="heaterButton" onclick="toggleHeating(heating)">Toggle Heating</button>
+  </div>
+  <div>
+    <button id="autoBrightness" onclick="autoBrightness()">Auto Brightness</button>
+  </div>
+  </div>
 </body>
+
 </html>
